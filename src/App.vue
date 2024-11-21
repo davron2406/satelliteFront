@@ -1,40 +1,16 @@
 <template>
-  <Header></Header>
-  <HomePage></HomePage>
-  <Services></Services>
-  <About></About>
-  <Aproach></Aproach>
-  <Benefits></Benefits>
-  <Testimonials></Testimonials>
-  <Faq></Faq>
-  </template>
+  
+  <router-view/>
+</template>
 
-<script>
-import Header from "./components/Header.vue"
-import HomePage from "./components/HomePage.vue"
-import Services from "./components/Services.vue"
-import About from "./components/About.vue"
-import Aproach from "./components/Aproach.vue"
-import Benefits from "./components/Benefits.vue"
-import Testimonials from "./components/Testimonials.vue"
-import Faq from "./components/Faq.vue"
+<script> 
+  import Web from './components/mainPage/Web.vue'
   export default{
-    data(){
-      return{
-
-      }
-    },
 
     components:{
-      Header,
-      HomePage,
-      Services,
-      About,
-      Aproach,
-      Benefits,
-      Testimonials,
-      Faq,
-    }
+      Web
+    },
+
   }
 
 </script>

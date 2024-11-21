@@ -2,7 +2,7 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
-import ScrollAnimation from './directives/scrollanimation.js'
+import axios from 'axios'
+import router from './router'
 
-
-createApp(App).directive('scrollanimation', ScrollAnimation).mount('#app')
+createApp(App).use(axios).use(router).mount('#app')

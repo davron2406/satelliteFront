@@ -1,7 +1,7 @@
 <template>
-    <div class="question-wrapper" @click="count">
-        <div class="question-only" @click="count">
-            <div class="question" @click="count">
+    <div class="question-wrapper" @click="open">
+        <div class="question-only" @click="open">
+            <div class="question" @click="open">
                 <p>{{ question }}</p>
             </div>
 
@@ -24,7 +24,7 @@ export default{
     },
 
     methods:{
-        count(){
+        open(){
             if(this.isAnswerOpen){
                 this.isAnswerOpen = false;
                 this.arrow = "keyboard_arrow_down"
@@ -54,7 +54,7 @@ export default{
 </script>
 
 
-<style>
+<style scoped>
 
     .question-wrapper{
         padding: 30px 0;

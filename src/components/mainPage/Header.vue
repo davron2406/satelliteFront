@@ -3,7 +3,7 @@
         <header class="header container">
             <div class="header-logo">
                 <a href="#">
-                    <img src="../assets/logo.svg" alt="">
+                    <img src="../assets/" alt="">
                 </a>
             </div>
 
@@ -31,7 +31,8 @@
                 </ul>
 
                 <div class="btn-wrapper">
-                    <button class="btn-header">Sign-up</button>
+                    <button class="btn-header" @click="signUp">Sign-up</button>
+                    <button class="btn-header" @click="signIn">Sign-In</button>
                 </div>
                 
             </nav>
@@ -41,7 +42,23 @@
 </template>
 
 <script>
+    export default{
+        data(){
+            return{
 
+            }
+        },
+
+        methods:{
+            signUp(){
+                this.$emit("openSignUp")
+            },
+
+            signIn(){
+                this.$emit("openSignIn")
+            }
+        }
+    }
 </script>
 
 <style>

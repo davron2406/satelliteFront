@@ -51,6 +51,9 @@ export default{
 </script>
 
 <style>
+    .faq{
+        padding: 200px 0;
+    }
     .faq-main{
         display: flex;
         justify-content: space-between;
