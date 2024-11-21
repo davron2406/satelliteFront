@@ -75,7 +75,7 @@
 
             async getQuestions(pageNumber, pageSize){
                 console.log("working")
-                const response = await axios.get("http://localhost:8080/api/question/getQuestions?page=" + pageNumber + "&size=" + pageSize,
+                const response = await axios.get("https://satelliteback.onrender.com/api/question/getQuestions?page=" + pageNumber + "&size=" + pageSize,
                     {headers: {"Authorization": "Bearer " + localStorage.getItem("token")}}
                 )
                 console.log(response)

@@ -99,7 +99,7 @@
                     console.log("Please fill all fields")
                 }
                 else{
-                    const response = await axios.post("http://localhost:8080/api/auth/register", this.user)
+                    const response = await axios.post("https://satelliteback.onrender.com/api/auth/register", this.user)
                     console.log(response);
                 }
                 this.$emit("closeSign")
@@ -118,7 +118,7 @@
             },
 
             async login(){
-              const response = await axios.post("http://localhost:8080/api/auth/login", this.userSignIn)
+              const response = await axios.post("https://satelliteback.onrender.com/api/auth/login", this.userSignIn)
               if(response.data.success == false){
                 this.userSignIn.email = null
                 this.userSignIn.password = null

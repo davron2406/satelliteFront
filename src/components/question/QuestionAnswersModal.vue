@@ -47,7 +47,7 @@
 
             async getQuestionAnswers(){
                 console.log(this.questionId)
-               const response = await axios.get('http://localhost:8080/api/answer/getQuestionAnswers/' + this.questionId, {headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}})
+               const response = await axios.get('https://satelliteback.onrender.com/api/answer/getQuestionAnswers/' + this.questionId, {headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}})
                console.log(response)
             }
         },

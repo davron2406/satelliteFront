@@ -137,7 +137,7 @@
           formData.append("questionImage", this.question.questionImage)
           formData.append("data", JSON.stringify({questionText: this.question.questionText, questionLevel: this.question.questionLevel, extra: this.question.extra}))
 
-          const response = await axios.post('http://localhost:8080/api/question/addQuestion', formData, {
+          const response = await axios.post('https://satelliteback.onrender.com/api/question/addQuestion', formData, {
             headers:{
               'Authorization':  'Bearer ' + localStorage.getItem('token'),
               "Content-Type": "multipart/form-data",
