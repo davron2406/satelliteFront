@@ -1,7 +1,7 @@
 <template>
     <aside class="sidebar" :class="`${this.is_expanded ? 'is-expanded' : ''}`">
         <div class="logo">
-            <img src="../assets/logo.svg" alt="">
+            <img src="../../assets/logo.svg" alt="">
             <p>{{ this.currentUser.fullName }}</p>
             <p>{{ this.currentUser.email }}</p>
         </div>

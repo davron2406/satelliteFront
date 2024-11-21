@@ -13,7 +13,7 @@
                 <div class="testimonials-card">
                     <div class="testimonials-card-img-wrapper">
                         <div class="testimonials-card-img">
-                            <img src="../assets/azim-dc6a7831.png" alt="">
+                            <img src="../../assets/azim-dc6a7831.png" alt="">
                         </div>
                     </div>
 
@@ -26,7 +26,7 @@
                 <div class="testimonials-card">
                     <div class="testimonials-card-img-wrapper">
                         <div class="testimonials-card-img">
-                            <img src="../assets/azim-dc6a7831.png" alt="">
+                            <img src="../../assets/azim-dc6a7831.png" alt="">
                         </div>
                     </div>
 
@@ -39,7 +39,7 @@
                 <div class="testimonials-card">
                     <div class="testimonials-card-img-wrapper">
                         <div class="testimonials-card-img">
-                            <img src="../assets/azim-dc6a7831.png" alt="">
+                            <img src="../../assets/azim-dc6a7831.png" alt="">
                         </div>
                     </div>
 

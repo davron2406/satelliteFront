@@ -9,7 +9,7 @@
             <div class="languages">
                 <div class="language-main">
                     <div class="flag">
-                        <img src="../assets/Без названия.png" alt="">
+                        <img src="../../assets/Без названия.png" alt="">
                     </div>
                 </div>
             </div>
@@ -20,13 +20,13 @@
 
             <div class="account">
                 <div class="account-avatar" @click="openAccount()">
-                    <img src="../assets/azim-dc6a7831.png" alt="">
+                    <img src="../../assets/azim-dc6a7831.png" alt="">
                 </div>
 
                 <div class="account-extra" v-if="isAccountOpen">
                     <div class="user-info">
                         <div class="account-avatar">
-                            <img src="../assets/azim-dc6a7831.png" alt="">
+                            <img src="../../assets/azim-dc6a7831.png" alt="">
                         </div>
                         <div>
                             <p class="user-name">Ochilov Azimjon</p>

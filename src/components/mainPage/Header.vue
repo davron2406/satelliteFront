@@ -3,7 +3,7 @@
         <header class="header container">
             <div class="header-logo">
                 <a href="#">
-                    <img src="../assets/" alt="">
+                    <img src="../../assets/logo.svg" alt="">
                 </a>
             </div>
 
