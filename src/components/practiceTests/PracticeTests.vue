@@ -31,7 +31,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
     import PracticeTestQuestions from './PracticeTestQuestions.vue';
     export default{
         data(){
@@ -62,7 +61,7 @@
         
 
             async getPracticeTests(pageNumber, pageSize){
-                const response = await axios.get("http://localhost:8080/api/practiceTest/getPracticeTests?page=" + pageNumber + "&size=" + pageSize,
+                const response = await this.$axios.get("/practiceTest/getPracticeTests?page=" + pageNumber + "&size=" + pageSize,
                     {headers: {"Authorization": "Bearer " + localStorage.getItem("token")}}
                 )
                 this.practiceTests = response.data.data.content;              

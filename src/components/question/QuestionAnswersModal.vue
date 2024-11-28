@@ -70,7 +70,7 @@
 
             async getQuestionAnswers(){
                 console.log(this.questionId)
-               const response = await axios.get('http://localhost:8080/api/answer/getQuestionAnswers/' + this.questionId, {headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}})
+               const response = await this.$axios.get('/answer/getQuestionAnswers/' + this.questionId, {headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}})
                this.answers = response.data.data;
             }
         },

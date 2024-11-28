@@ -48,7 +48,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
     import AddQuestionModal from "./AddQuestionModal.vue"
     import QuestionAnswersModal from './QuestionAnswersModal.vue';
     export default{
@@ -78,8 +77,7 @@
             },
 
             async getQuestions(pageNumber, pageSize){
-                console.log("working")
-                const response = await axios.get("http://localhost:8080/api/question/getQuestions?page=" + pageNumber + "&size=" + pageSize,
+                const response = await this.$axios.get("/question/getQuestions?page=" + pageNumber + "&size=" + pageSize,
                     {headers: {"Authorization": "Bearer " + localStorage.getItem("token")}}
                 )
                 console.log(response)

@@ -28,7 +28,7 @@
                 <div class="input-row">
                   <div class="input-wrapper ">
                     <label for="questionSubject" class="input-label">Subject</label>
-                    <select name="questionSubject" id="questionSubject" v-model="question.subject" @change="getTopicsySubject()">
+                    <select name="questionSubject" id="questionSubject" v-model="question.subject" @change="getSUbjectTopics()">
                       <option v-for="subject in subjects" :value="subject">{{ subject }}</option>
                     </select>
                   </div>
@@ -169,7 +169,7 @@
           formData.append("questionImage", this.question.questionImage)
           formData.append("data", JSON.stringify({questionText: this.question.questionText, questionLevel: this.question.questionLevel, extra: this.question.extra, subject: this.question.subject, topicId: this.question.topicId}))
 
-          const response = await axios.post('http://localhost:8080/api/question/addQuestion', formData, {
+          const response = await this.$axios.post('/question/addQuestion', formData, {
             headers:{
               'Authorization':  'Bearer ' + localStorage.getItem('token'),
               "Content-Type": "multipart/form-data",
@@ -192,7 +192,7 @@
             formData1.append("answerImage", answer.answerImage)
             formData1.append("data", JSON.stringify({answerText: answer.answerText, extra: answer.extra, correct: answer.isTrue}))
 
-            const response1 = await axios.post('http://localhost:8080/api/answer/addAnswer/' + response.data.data, formData1, {
+            const response1 = await this.$axios.post('/answer/addAnswer/' + response.data.data, formData1, {
               headers:{
                 'Authorization':  'Bearer ' + localStorage.getItem('token'),
                 "Content-Type": "multipart/form-data",
@@ -213,7 +213,7 @@
         },
 
         async getSubjects(){
-          const response = await axios.get('http://localhost:8080/api/topic/getSubjects', {
+          const response = await this.$axios.get('/topic/getSubjects', {
             headers:{
               'Authorization':  'Bearer ' + localStorage.getItem('token'),
             },
@@ -222,8 +222,8 @@
 
         },
 
-        async  getTopicsySubject(){
-          const response = await axios.get('http://localhost:8080/api/topic/getTopicsBySubject/' + this.question.subject, {
+        async  getSUbjectTopics(){
+          const response = await this.$axios.get('/topic/getTopicsBySubject/' + this.question.subject, {
             headers:{
               'Authorization':  'Bearer ' + localStorage.getItem('token'),
             },

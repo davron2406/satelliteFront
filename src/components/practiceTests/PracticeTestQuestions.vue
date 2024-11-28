@@ -48,7 +48,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
     export default{
         data(){
             return{
@@ -70,13 +69,13 @@
             },
 
             async getQuestionAnswers(){
-               const response = await axios.get('http://localhost:8080/api/practiceTest/getPracticeTestQuestions/' + this.practiceTestId, {headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}})
+               const response = await this.$axios.get('/practiceTest/getPracticeTestQuestions/' + this.practiceTestId, {headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}})
                this.questions = response.data.data;
             },
 
             async removeQuestion(questionId){
                
-                const response = await axios.delete('http://localhost:8080/api/practiceTest/removeQuestion/' + this.practiceTestId + "?questionId=" + questionId, {
+                const response = await this.$axios.delete('/practiceTest/removeQuestion/' + this.practiceTestId + "?questionId=" + questionId, {
                     
                     headers:{
                     'Authorization':  'Bearer ' + localStorage.getItem('token'),

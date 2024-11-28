@@ -39,7 +39,6 @@
 </template>
 
 <script >
-    import axios from 'axios'
     export default{
 
         data(){
@@ -60,7 +59,7 @@
             },
 
             async getSidebar(){
-                let response = await axios.get("http://localhost:8080/api/sidebar/getSidebars", {headers : { "Authorization": 'Bearer ' + localStorage.getItem('token')}});
+                let response = await this.$axios.get("/sidebar/getSidebars", {headers : { "Authorization": 'Bearer ' + localStorage.getItem('token')}});
                 this.sideBars = response.data.data
                 console.log(this.sideBars)
                 console.log(response)

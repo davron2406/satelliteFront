@@ -75,7 +75,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
     export default{
         data(){
             return{
@@ -118,7 +117,7 @@
             },
 
             async login(){
-              const response = await axios.post("http://localhost:8080/api/auth/login", this.userSignIn)
+              const response = await this.$axios.post("/auth/login", this.userSignIn)
               if(response.data.success == false){
                 this.userSignIn.email = null
                 this.userSignIn.password = null

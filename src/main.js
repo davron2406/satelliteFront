@@ -5,4 +5,10 @@ import App from './App.vue'
 import axios from 'axios'
 import router from './router'
 
-createApp(App).use(axios).use(router).mount('#app')
+axios.defaults.baseURL = 'https://satelliteback.onrender.com';
+
+const app = createApp(App).use(router)
+
+app.config.globalProperties.$axios = axios
+
+app.mount('#app')
