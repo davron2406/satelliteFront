@@ -24,6 +24,22 @@
                     <input type="text" id="questionExtraInfo" v-model="question.extra">
                   </div>
                 </div>
+
+                <div class="input-row">
+                  <div class="input-wrapper ">
+                    <label for="questionSubject" class="input-label">Subject</label>
+                    <select name="questionSubject" id="questionSubject" v-model="question.subject" @change="getTopicsySubject()">
+                      <option v-for="subject in subjects" :value="subject">{{ subject }}</option>
+                    </select>
+                  </div>
+
+                  <div class="input-wrapper ">
+                    <label for="questionTopic" class="input-label">Subject</label>
+                    <select name="questionTopic" id="questionTopic" v-model="question.topicId">
+                      <option v-for="topic in topics" :value="topic.id">{{ topic.name }}</option>
+                    </select>
+                  </div>
+                </div>
                 
                 <div class="input-row"> 
                   <div class="input-wrapper" >
@@ -77,11 +93,19 @@
             </footer>
         </div>
 
+        
+    <Popup v-if="isPopupOpen" :message="this.popupMessage"
+            time=2 
+            :backgroundColor="this.backgroundColor"
+             @closePopup="closePopup">
+    </Popup>
     </div>
+
 </template>
 
 <script>
   import axios from "axios"
+  import Popup from "../utils/Popup.vue";
   export default{
     data(){
       return{
@@ -90,23 +114,34 @@
           extra:"",
           questionLevel: 0,
           questionImage: null,
-
+          subject: "",
+          topicId: "",
           answers:[
           {
             answerText:"",
             extra:"",
             isTrue: false,
+            answerImage: null
           }
         ],
         },
+
+        subjects: [],
+        topics: [],
+
+        isPopupOpen: false,
+        backgroundColor: "green",
+        popupMessage: "",
       }
+    },
+
+    components: {
+      Popup,
     },
 
     methods: {
        handleImage(){
           const file = this.$refs.imageInput.files[0]; // Access the file using the ref
-
-          console.log(this.$refs.imageInput)
           if (file && file.type.startsWith('image/')) {
             this.question.questionImage = file;
 
@@ -117,7 +152,6 @@
         },
 
          handleAnswerImage(index, event){
-          console.log("working" + index)
             const file = event.target.files[0];
             
             if (file && file.type.startsWith('image/')) {
@@ -127,29 +161,80 @@
               this.question.answers[index].answerImage = null;
               alert("Please select a valid image file.");
             }
-
-            console.log(this.answers[index])
         },
 
         async addQuestion(){
 
           const formData = new FormData();
           formData.append("questionImage", this.question.questionImage)
-          formData.append("data", JSON.stringify({questionText: this.question.questionText, questionLevel: this.question.questionLevel, extra: this.question.extra}))
+          formData.append("data", JSON.stringify({questionText: this.question.questionText, questionLevel: this.question.questionLevel, extra: this.question.extra, subject: this.question.subject, topicId: this.question.topicId}))
 
-          const response = await axios.post('https://satelliteback.onrender.com/api/question/addQuestion', formData, {
+          const response = await axios.post('http://localhost:8080/api/question/addQuestion', formData, {
             headers:{
               'Authorization':  'Bearer ' + localStorage.getItem('token'),
               "Content-Type": "multipart/form-data",
             },
           })
 
+          if(response.data.success){
+            this.backgroundColor = "green"
+          }
+          else{
+            this.backgroundColor = "red"
+            this.popupMessage = "Something went wrong try again  later"
+            this.isPopupOpen = true
+            return
+          }
+
+          this.question.answers.forEach(async answer => {
+
+            const formData1 = new FormData();
+            formData1.append("answerImage", answer.answerImage)
+            formData1.append("data", JSON.stringify({answerText: answer.answerText, extra: answer.extra, correct: answer.isTrue}))
+
+            const response1 = await axios.post('http://localhost:8080/api/answer/addAnswer/' + response.data.data, formData1, {
+              headers:{
+                'Authorization':  'Bearer ' + localStorage.getItem('token'),
+                "Content-Type": "multipart/form-data",
+              },
+            })
+
+            if(!response1.data.success){
+              this.backgroundColor = "red"
+              this.popupMessage = "Something went wrong try again  later"
+              this.isPopupOpen = true
+              return
+            }
+          });
+
+          this.backgroundColor = "green"
+          this.popupMessage = "Saved"
+          this.isPopupOpen = true
+        },
+
+        async getSubjects(){
+          const response = await axios.get('http://localhost:8080/api/topic/getSubjects', {
+            headers:{
+              'Authorization':  'Bearer ' + localStorage.getItem('token'),
+            },
+          })
+          this.subjects = response.data;
 
         },
 
+        async  getTopicsySubject(){
+          const response = await axios.get('http://localhost:8080/api/topic/getTopicsBySubject/' + this.question.subject, {
+            headers:{
+              'Authorization':  'Bearer ' + localStorage.getItem('token'),
+            },
+          })
+          this.topics = response.data.data;
+        },
+
+
         close(){
           this.$emit('close')
-          console.log("close working")
+          
         },
 
         addAnswer(){
@@ -161,19 +246,18 @@
           )
         },
 
+        closePopup(){
+          this.isPopupOpen = false;
+        }
+
        
 
-        // async getQuestionImage(){
-        //   console.log("mounted working")
-        //   const response = await axios.get("http://localhost:8080/api/image/downloadImage/ee5939e4-227e-4f7f-87ca-81cbcc4ca389", {headers: {'Authorization': 'Bearer ' + localStorage.getItem('token')}})
-        //   console.log(response);
-        //   this.image = 'data:image/png;base64,' + response.data.data
-        // }
+       
     },
 
-    // mounted(){
-    //   this.getQuestionImage()
-    // }
+    mounted() {
+      this.getSubjects()
+    }
   }
 
 </script>

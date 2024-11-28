@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import Dashboard from "../components/dashboard/Dashboard.vue"
 import Web from "../components/mainPage/Web.vue"
 import Questions from "../components/question/Questions.vue"
-import PracticeTests from "../components/PracticeTests.vue"
+import PracticeTests from "../components/practicetests/PracticeTests.vue"
 
 
 const routes = [

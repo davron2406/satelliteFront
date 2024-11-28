@@ -7,6 +7,8 @@
                         <th>Question</th>
                         <th>Extra Info</th>
                         <th>Level</th>
+                        <th>Subject</th>
+                        <th>Topic</th>
                         <th>Image</th>
                         <th>Answers</th>
                     </tr>
@@ -17,6 +19,8 @@
                         <td>{{ question.questionText }}</td>
                         <td>{{ question.extra }}</td>
                         <td>{{ question.questionLevel }}</td>
+                        <td>{{ question.subject }}</td>
+                        <td>{{ question.topic.name }}</td>
                         <td>
                             <div class="question-image">
                                
@@ -75,7 +79,7 @@
 
             async getQuestions(pageNumber, pageSize){
                 console.log("working")
-                const response = await axios.get("https://satelliteback.onrender.com/api/question/getQuestions?page=" + pageNumber + "&size=" + pageSize,
+                const response = await axios.get("http://localhost:8080/api/question/getQuestions?page=" + pageNumber + "&size=" + pageSize,
                     {headers: {"Authorization": "Bearer " + localStorage.getItem("token")}}
                 )
                 console.log(response)

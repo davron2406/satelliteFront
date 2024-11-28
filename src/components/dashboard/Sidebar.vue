@@ -60,10 +60,10 @@
             },
 
             async getSidebar(){
-
-                console.log(localStorage.getItem('token'))
-                let response = await axios.get("https://satelliteback.onrender.com/api/sidebar/getSidebars", {headers : { "Authorization": 'Bearer ' + localStorage.getItem('token')}});
+                let response = await axios.get("http://localhost:8080/api/sidebar/getSidebars", {headers : { "Authorization": 'Bearer ' + localStorage.getItem('token')}});
                 this.sideBars = response.data.data
+                console.log(this.sideBars)
+                console.log(response)
             },
 
          

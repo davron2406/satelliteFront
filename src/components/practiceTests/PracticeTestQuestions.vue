@@ -3,7 +3,7 @@
         <div class="modal">
             <header class="modal-header">
                 <slot name="header">
-                    Add Teacher
+                    Practice Test Questions
                 </slot>
                 <button type="button" class="btn-close" @click="close()"> x
                 </button>
@@ -13,24 +13,25 @@
                 <table class="form-table">
                     <thead>
                         <tr>
-                            <th>Answer</th>
+                            <th>Question</th>
                             <th>Extra Info</th>
                             <th>Image</th>
-                            <th>Correct</th>
+                            <th>Answers</th>
                         </tr>
                     </thead>
 
                     <tbody class="table-body">
-                        <tr v-for="answer in answers">
-                            <td>{{ answer.answerText }}</td>
-                            <td>{{ answer.extra }}</td>
+                        <tr v-for="question in questions">
+                            <td>{{ question.questionText }}</td>
+                            <td>{{ question.extra }}</td>
                             <td> 
                                 <div class="question-image">
-                                    <img :src="answer.answerImage.fileUrl" alt="">
+                                    <img :src="question.questionImage.fileUrl" alt="">
                                 </div>
                             </td>
-                            <td>{{ answer.correst }}</td>
-                           
+                            <td>
+                                <span class="material-icons danger"  @click="removeQuestion(question.id)">delete</span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -51,12 +52,12 @@
     export default{
         data(){
             return{
-                answers: [],
+                questions: [],
             }
         },
 
         props:{
-            questionId: {
+            practiceTestId: {
                 type: String,
                 required: true,
             }
@@ -69,9 +70,19 @@
             },
 
             async getQuestionAnswers(){
-                console.log(this.questionId)
-               const response = await axios.get('http://localhost:8080/api/answer/getQuestionAnswers/' + this.questionId, {headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}})
-               this.answers = response.data.data;
+               const response = await axios.get('http://localhost:8080/api/practiceTest/getPracticeTestQuestions/' + this.practiceTestId, {headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}})
+               this.questions = response.data.data;
+            },
+
+            async removeQuestion(questionId){
+               
+                const response = await axios.delete('http://localhost:8080/api/practiceTest/removeQuestion/' + this.practiceTestId + "?questionId=" + questionId, {
+                    
+                    headers:{
+                    'Authorization':  'Bearer ' + localStorage.getItem('token'),
+                    },
+                })
+                console.log(response);
             }
         },
 
@@ -80,3 +91,12 @@
         }
     }
 </script>
+
+
+<style>
+    .danger{
+        color: red;
+        background-color: transparent;
+        cursor: pointer;
+    }
+</style>
