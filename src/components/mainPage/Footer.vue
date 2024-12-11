@@ -149,5 +149,23 @@
     }
 
 
+    @media (max-width: 1000px){
+        .footer-col li a{
+            color: white;
+            font-size: 12px;
+        }
+
+        .footer-header{
+            font-size: 16px;
+        }
+
+        .footer-top{
+            flex-direction: column;
+        }
+
+        .footer-col{
+            width: 100%;
+        }
+    }
 
 </style>

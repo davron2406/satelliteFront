@@ -115,4 +115,31 @@
         text-align: center;
         margin-top: 20px;
     }
+
+    @media (max-width: 1000px){
+        .testimonials-card-img-wrapper{
+            padding: 20px 0;
+        }
+
+        .testimonials-card-info{
+            padding: 15px;
+
+            font-size: 20px;
+        }
+
+        .client-claim{
+            font-size: 18px;
+        }
+    }
+
+    @media (max-width: 700px){
+        .testimonials-cards{
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .testimonials-card{
+            width: 100%;
+        }
+    }
 </style>

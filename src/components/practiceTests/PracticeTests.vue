@@ -24,14 +24,16 @@
        <button @click="forward()">forward</button>
     </div>
 
-    <button @click="addQuestion()">Add Question</button>
+    <button @click="generatePracticeTest()">Add Question</button>
 
     <PracticeTestQuestions v-if="isQuestionsModalOpen" @close="openQuestionsModal" :practiceTestId = "practiceTestId"></PracticeTestQuestions>
+    <GeneratePracticeTestModal v-if="isGenerateModalOpen" @close="generatePracticeTest()"></GeneratePracticeTestModal>
 
 </template>
 
 <script>
     import PracticeTestQuestions from './PracticeTestQuestions.vue';
+    import GeneratePracticeTestModal from './GeneratePracticeTestModal.vue'
     export default{
         data(){
             return{
@@ -40,12 +42,14 @@
                 defaultPageSize: 10,
 
                 isQuestionsModalOpen: false,
+                isGenerateModalOpen: false,
                 practiceTestId: "",
             }
         },
 
         components:{
-           PracticeTestQuestions
+           PracticeTestQuestions,
+           GeneratePracticeTestModal,
         },
 
         methods:{
@@ -66,6 +70,15 @@
                 )
                 this.practiceTests = response.data.data.content;              
             },
+
+            generatePracticeTest(){
+                if(this.isGenerateModalOpen){
+                    this.isGenerateModalOpen = false
+                }
+                else{
+                    this.isGenerateModalOpen = true;
+                }
+            }
         },
 
         mounted(){

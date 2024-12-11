@@ -3,6 +3,11 @@ import Dashboard from "../components/dashboard/Dashboard.vue"
 import Web from "../components/mainPage/Web.vue"
 import Questions from "../components/question/Questions.vue"
 import PracticeTests from "../components/practiceTests/PracticeTests.vue"
+import MyPracticeTests from '../components/practiceTests/MyPracticeTests.vue'
+import PracticeTestsToSolve from "../components/practiceTests/SelectPracticeTest.vue"
+import SolvingPracticeTest from "../components/solvingPracticeTest/SolvingPracticeTest.vue"
+import FinishedPracticeTest from '../components/solvingPracticeTest/FinishedPracticeTest.vue'
+
 
 
 const routes = [
@@ -23,11 +28,33 @@ const routes = [
             },
 
             {
-                path: "/practicetests",
+                path: "/myPracticeTests",
+                component: MyPracticeTests
+            },
+
+            {
+                path: "/practiceTests",
                 component: PracticeTests
             }
         ]
+    },
+
+    {
+        path: "/solvePracticeTest",
+        component: PracticeTestsToSolve
+    },
+
+    {
+        path:"/solvingPracticeTest/:practiceTestId",
+        component: SolvingPracticeTest
+    },
+
+    {
+        path: "/finishedPracticeTest/:solvedPraticeTestId",
+        component: FinishedPracticeTest
     }
+
+    
 
 ]
 

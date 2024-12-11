@@ -76,6 +76,7 @@ export default{
         font-size: 32px;
         font-weight: 200;
         transition: all .1s;
+        text-align: center;
     }
 
     .service-description{
@@ -90,6 +91,32 @@ export default{
     .service:hover{
         background-color: #76747B;
         color: white;
+    }
+
+    @media (max-width: 1000px){
+        .service-name p{
+            font-size: 24px;
+        }
+
+        .service-description p {
+            font-size: 16px;
+            text-align: center;
+        }
+    }
+
+    @media(max-width: 700px){
+        .service-main{
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .service{
+            padding: 20px 0;
+        }
+
+        .service-description{
+            width: 100%;
+        }
     }
 
 </style>

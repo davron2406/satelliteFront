@@ -3,7 +3,7 @@
     <Header @openSignUp="openSignUp" @openSignIn="openSignIn"></Header>
     <HomePage></HomePage>
     <Services></Services>
-    <About></About>
+    <!-- <About></About> -->
     <Aproach></Aproach>
     <Benefits></Benefits>
     <Testimonials></Testimonials>

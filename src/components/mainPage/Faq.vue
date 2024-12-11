@@ -67,7 +67,17 @@ export default{
         width: 60%;
     }
 
+    @media (max-width: 700px){
+        .faq-main{
+            flex-direction: column;
+        }
 
+        .faq-info{
+            width: 100%;
+
+            font-size: 18px;
+        }
+    }
 
    
 </style>

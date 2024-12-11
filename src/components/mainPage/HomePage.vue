@@ -75,7 +75,7 @@
 
     .animation{
         width: 100%;
-        /* background-color: black; */
+        height: 100%;
         overflow-x: hidden;
     }
 
@@ -216,6 +216,60 @@
 
     .animation:hover .animation-row-3 .animation-col-3{
         background-color: #c3c2c2;
+    }
+
+
+    @media (max-width: 1000px){
+        .home-info h1{
+            font-size: 48px;
+        }
+
+        .home{
+            height: 70vh;
+        }
+
+        .home-main{
+            height: 100%;
+        }
+
+        .home-img{
+            height: 100%;
+        }
+
+        .animation-row{
+            height: 130px;
+        }
+    }
+
+    @media (max-width: 700px){
+        .home-main{
+            flex-direction: column;
+            height: auto;
+            gap: 20px;
+        }
+
+        .home{
+            height: auto;
+        }
+
+        .home-info{
+            width: 100%;
+        }
+
+        .home-img{
+            width: 100%;
+        }
+
+        .animation-row{
+            height: 150px;
+        }
+    }
+
+
+    @media (max-width: 550px){
+        .animation-row{
+            height: 120px;
+        }
     }
 
 

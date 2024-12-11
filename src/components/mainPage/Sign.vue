@@ -37,16 +37,11 @@
                     </div>
 
                     <div>
-                        <label for="avatar">Avatar*</label>
-                        <input type="file" id="avatar" ref="fileInput" @change="handleFile()">
-                    </div>
-
-                    <div>
                         <button class="btn-sign-up" @click="register()">SIGN UP</button>
                     </div>
 
                     <div>
-                        <p>if you have an account please <button @click="openSignIn">SIGN IN</button></p>
+                        <p class="changingSign">if you have an account please <button @click="openSignIn">SIGN IN</button></p>
                     </div>
                 </div>
 
@@ -66,7 +61,7 @@
                     </div>
 
                     <div>
-                        <p>if you don't have an account please <button @click="openSignUp" >SIGN UP</button></p>
+                        <p class="changingSign">if you don't have an account please <button @click="openSignUp" >SIGN UP</button></p>
                     </div>
                 </div>
             </div>
@@ -83,6 +78,7 @@
                     lastName:"",
                     email:"",
                     phoneNumber:"",
+                    password: ""
                 },
 
                 userSignIn:{
@@ -95,11 +91,9 @@
         methods:{
             async register(){
                 if(this.user.name == "" || this.user.surname == "" || this.user.email == "" || this.user.phoneNumber == "", this.user.email ==""){
-                    console.log("Please fill all fields")
                 }
                 else{
-                    const response = await axios.post("http://localhost:8080/api/auth/register", this.user)
-                    console.log(response);
+                    const response = await this.$axios.post("/auth/register", this.user)
                 }
                 this.$emit("closeSign")
             },
@@ -213,4 +207,57 @@
         height: 100vh;
         overflow-y: hidden;
     }
+
+
+    @media (max-width: 1000px){
+        .sign-left p{
+            font-size: 48px;
+        }
+
+        .changingSign{
+            font-size: 18px;
+        }
+
+        .sign-right, .signIn, .signUp{
+            row-gap: 10px;
+        }
+
+        .sign-right div input{
+            padding: 5px;
+        }
+    }
+
+    @media (max-width: 1000px){
+        .sign-left p{
+            font-size: 36px;
+        }
+
+        .sign-main{
+            flex-direction: column;
+            padding: 20px 50px;
+        }
+
+        .sign-left{
+            width: 100%;
+            text-align: center;
+        }
+
+        .sign-right{
+            width: 100%;
+        }
+
+        .changingSign{
+            font-size: 18px;
+        }
+
+        .sign-right, .signIn, .signUp{
+            row-gap: 10px;
+        }
+
+        .sign-right div input{
+            padding: 5px;
+        }
+    }
+
+
 </style>

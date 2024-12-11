@@ -84,4 +84,25 @@ export default{
         line-height: 48px;
     }
 
+    @media (max-width: 1000px){
+        .title p {
+            font-size: 14px;
+        }
+
+        .subtitle p {
+            font-size: 36px;
+            line-height: 36px;
+        }
+    }
+
+    @media (max-width: 700px){
+        .title p {
+            font-size: 12px;
+        }
+
+        .subtitle p {
+            font-size: 24px;
+            line-height: 36px;
+        }
+    }
 </style>

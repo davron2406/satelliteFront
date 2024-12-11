@@ -41,4 +41,21 @@
         line-height: 48px;
         color: #fff;
     }
+
+    @media (max-width: 1000px){
+        .aproach-info p{
+            font-size: 24px;
+            line-height: 32px;
+        }
+
+        .aproach-info{
+            padding: 50px;
+        }
+    }
+
+    @media (max-width: 700px){
+        .aproach-info p {
+            font-size: 16px;
+        }
+    }
 </style>

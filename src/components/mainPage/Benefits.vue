@@ -62,4 +62,22 @@
         font-size: 32px;
     }
 
+    @media (max-width: 1000px){
+        .benefit-name{
+            font-size: 24px;
+            margin-bottom: 20px
+        }
+    }
+
+    @media (max-width: 700px){
+        .benefit-cards{
+            flex-direction: column;
+            gap: 15px ;
+        }
+
+        .benefit-card{
+            width: 100%;
+        }
+    }
+
 </style>
