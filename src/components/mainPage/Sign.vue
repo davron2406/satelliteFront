@@ -227,9 +227,10 @@
         }
     }
 
-    @media (max-width: 1000px){
+    @media (max-width: 700px){
         .sign-left p{
-            font-size: 36px;
+            font-size: 24px;
+            line-height: 28px;
         }
 
         .sign-main{
