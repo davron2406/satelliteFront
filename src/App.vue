@@ -17,7 +17,5 @@
 
 <style>
 
-body{
-  background-color: #E0e0e0;
-}
+
 </style>

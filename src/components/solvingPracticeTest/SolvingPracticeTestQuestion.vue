@@ -55,17 +55,18 @@ export default{
     </div>
 
     <div class="questionImage">
-      <img :src="imageUrl" alt="">
+      <img :src="imageUrl" v-if="imageUrl != null" alt="">
     </div>
   </div>
 </template>
 
-<style scoped>
+<style >
 .question-content {
   padding: 1.5rem;
   background-color: white;
   border-right: 1px solid #e5e7eb;
   height: 100%;
+  overflow-y: scroll;
 }
 
 .question-header {
@@ -114,10 +115,13 @@ export default{
 }
 
 .questionImage{
-  width: 100%;
+  width: 600px;
+  height: 400px;
 }
 
 .questionImage img{
   width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 </style>

@@ -26,7 +26,7 @@
                             <td>{{ answer.extra }}</td>
                             <td> 
                                 <div class="question-image">
-                                    <img :src="answer.answerImage.fileUrl" alt="">
+                                    <img :src="answer.answerImage?.fileUrl" alt="">
                                 </div>
                             </td>
                             <td>{{ answer.correst }}</td>

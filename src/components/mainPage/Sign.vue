@@ -23,7 +23,7 @@
                     
                     <div>
                         <label for="email"> Email*</label>
-                        <input type="text" id="email" name="email" v-model="user.email">
+                        <input type="email" id="email" name="email" v-model="user.email">
                     </div>
                     
                     <div>
@@ -67,10 +67,16 @@
             </div>
         </div>
     </div>
+    <Popup v-if="isPopUpOpen" :message="this.popUpMessage"
+        time=3
+        :backgroundColor="this.backgroundColor"
+        @closePopup="closePopup()">
+    </Popup>
 </template>
 
 <script>
-    export default{
+    import Popup from '../utils/Popup.vue';
+    export default{ 
         data(){
             return{
                 user:{
@@ -84,18 +90,51 @@
                 userSignIn:{
                     email:"",
                     password: "",
-                }
+                },
+                popUpMessage: "",
+                backgroundColor: "",
+                isPopUpOpen: false,
             }
+        },
+
+        components:{
+            Popup
         },
 
         methods:{
             async register(){
-                if(this.user.name == "" || this.user.surname == "" || this.user.email == "" || this.user.phoneNumber == "", this.user.email ==""){
+                for(let key in this.user){
+                    if(!this.user[key]){
+                        this.popUpMessage = `${key} cannot be empty`
+                        this.backgroundColor = "red";
+                        this.isPopUpOpen = true;
+                        return;
+                    }
                 }
-                else{
+                if(!this.user.email.includes('@')){
+                    this.popUpMessage = `Please enter correct email`
+                    this.backgroundColor = "red";
+                    this.isPopUpOpen = true;
+                    return;
+                }
+
+                try{
                     const response = await this.$axios.post("/auth/register", this.user)
+                    if(!response.data.isSuccess){
+                        this.popUpMessage = `Successfully registerd Please verify your email and Sign in`
+                        this.backgroundColor = "green";
+                        this.isPopUpOpen = true;
+                    }
+                    await this.wait(3000);
+
+                    this.openSignIn();
                 }
-                this.$emit("closeSign")
+                catch(error){
+                    this.popUpMessage = error.message
+                    this.backgroundColor = "green";
+                    this.isPopUpOpen = true;
+                }
+                
             },
 
             exit(){
@@ -110,17 +149,43 @@
                 this.$emit("openSignIn")
             },
 
-            async login(){
-              const response = await this.$axios.post("/auth/login", this.userSignIn)
-              if(response.data.success == false){
-                this.userSignIn.email = null
-                this.userSignIn.password = null
-              }
-              else{
-                localStorage.setItem('token',response.data)
-                this.$router.push('/dashboard')
-              }
+            closePopup(){
+                this.isPopUpOpen = false
             },
+
+            async login(){
+              for(let key in this.userSignIn){
+                if(!this.userSignIn[key]){
+                    this.popUpMessage = `Please fill ${key}`
+                    this.backgroundColor = "red"
+                    this.isPopUpOpen = true
+                    return;
+                }
+              }
+              try{
+                const response = await this.$axios.post("/auth/login", this.userSignIn)
+                if(response.data.success == false){
+                    this.userSignIn.email = null
+                    this.userSignIn.password = null
+                    this.popUpMessage = "Password or email is incorrect"
+                    this.backgroundColor = "red"
+                    this.isPopUpOpen = true
+                }
+                else{
+                    localStorage.setItem('token',response.data)
+                    this.$router.push('/dashboard')
+                }
+              }catch(error){
+                 this.backgroundColor = "red"
+                 this.popUpMessage = error.message
+                 this.isPopUpOpen = true
+              }
+              
+            },
+
+            wait(ms){
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
         },
 
         props:{
@@ -233,6 +298,10 @@
             line-height: 28px;
         }
 
+        .sign-left{
+            margin-bottom: 10px;
+        }
+
         .sign-main{
             flex-direction: column;
             padding: 20px 50px;
@@ -257,6 +326,10 @@
 
         .sign-right div input{
             padding: 5px;
+        }
+
+        .signIn, .signUp label{
+            font-size: 16px;
         }
     }
 

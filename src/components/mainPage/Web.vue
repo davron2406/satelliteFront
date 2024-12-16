@@ -14,6 +14,7 @@
         @closeSign="closeSign"
         @openSignUp="openSignUp"
         @openSignIn="openSignIn"
+        @openPopup="openPopup"
         :signType="this.signType"></Sign>
   </div>
 </template>
@@ -67,7 +68,7 @@
         closeSign(){
             this.isSignOpen = false;
             this.isScrollDisable = false;
-        }
+        },
         }
     }
 </script>

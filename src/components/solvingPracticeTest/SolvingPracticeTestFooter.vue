@@ -5,7 +5,7 @@
         </div>
 
         <div class="questions-info">
-            Question 1 of 27
+            Question {{ currentQuestionNumber }} of {{ totalQuestionNumber }}
         </div>
  
         <div>
@@ -26,7 +26,10 @@
             isTestFinish: {
                 type: Boolean,
                 Required: true,
-            }
+            },
+
+            currentQuestionNumber:{},
+            totalQuestionNumber:{}
         },
 
         methods: {

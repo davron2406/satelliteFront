@@ -46,7 +46,7 @@
   }
 </script>
 
-<style scoped>
+<style>
 .answer-options {
   padding: 1.5rem;
   background-color: white;

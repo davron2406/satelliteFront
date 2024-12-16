@@ -99,6 +99,8 @@
             :backgroundColor="this.backgroundColor"
              @closePopup="closePopup">
     </Popup>
+
+    <LoadPage v-if="isLoadOpen"></LoadPage>
     </div>
 
 </template>
@@ -106,6 +108,7 @@
 <script>
   import axios from "axios"
   import Popup from "../utils/Popup.vue";
+  import LoadPage from "../utils/LoadPage.vue"
   export default{
     data(){
       return{
@@ -132,11 +135,14 @@
         isPopupOpen: false,
         backgroundColor: "green",
         popupMessage: "",
+
+        isLoadOpen: false,
       }
     },
 
     components: {
       Popup,
+      LoadPage
     },
 
     methods: {
@@ -168,7 +174,7 @@
           const formData = new FormData();
           formData.append("questionImage", this.question.questionImage)
           formData.append("data", JSON.stringify({questionText: this.question.questionText, questionLevel: this.question.questionLevel, extra: this.question.extra, subject: this.question.subject, topicId: this.question.topicId}))
-
+          this.isLoadOpen = true
           const response = await this.$axios.post('/question/addQuestion', formData, {
             headers:{
               'Authorization':  'Bearer ' + localStorage.getItem('token'),
@@ -180,6 +186,7 @@
             this.backgroundColor = "green"
           }
           else{
+            this.isLoadOpen = false
             this.backgroundColor = "red"
             this.popupMessage = "Something went wrong try again  later"
             this.isPopupOpen = true
@@ -200,16 +207,20 @@
             })
 
             if(!response1.data.success){
+              this.isLoadOpen = false
               this.backgroundColor = "red"
               this.popupMessage = "Something went wrong try again  later"
               this.isPopupOpen = true
               return
             }
           });
-
+          this.isLoadOpen = false
           this.backgroundColor = "green"
           this.popupMessage = "Saved"
           this.isPopupOpen = true
+          this.wait(3000)
+          this.close()
+        
         },
 
         async getSubjects(){
@@ -248,9 +259,11 @@
 
         closePopup(){
           this.isPopupOpen = false;
-        }
+        },
 
-       
+        wait(ms){
+          return new Promise(resolve => setTimeout(resolve, ms));
+        }
 
        
     },
@@ -303,6 +316,10 @@
     border-top: 1px solid #eeeeee;
     flex-direction: column;
     justify-content: flex-end;
+  }
+
+  .modal-footer btn{
+    cursor: pointer;
   }
 
   .modal-body {

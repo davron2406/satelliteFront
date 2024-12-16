@@ -7,6 +7,7 @@ import MyPracticeTests from '../components/practiceTests/MyPracticeTests.vue'
 import PracticeTestsToSolve from "../components/practiceTests/SelectPracticeTest.vue"
 import SolvingPracticeTest from "../components/solvingPracticeTest/SolvingPracticeTest.vue"
 import FinishedPracticeTest from '../components/solvingPracticeTest/FinishedPracticeTest.vue'
+import VerifyEmail from '../components/utils/VerifyEmail.vue'
 
 
 
@@ -52,6 +53,11 @@ const routes = [
     {
         path: "/finishedPracticeTest/:solvedPraticeTestId",
         component: FinishedPracticeTest
+    },
+
+    {
+        path: "/verifyEmail",
+        component: VerifyEmail
     }
 
     

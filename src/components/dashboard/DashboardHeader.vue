@@ -20,17 +20,17 @@
 
             <div class="account">
                 <div class="account-avatar" @click="openAccount()">
-                    <img src="../../assets/azim-dc6a7831.png" alt="">
+                    <img :src="user.avatarImage?.imageUrl || defaultAvatarImgUrl" alt="User Avatar">
                 </div>
 
                 <div class="account-extra" v-if="isAccountOpen">
                     <div class="user-info">
                         <div class="account-avatar">
-                            <img src="../../assets/azim-dc6a7831.png" alt="">
+                            <img :src="user.avatarImage?.imageUrl || defaultAvatarImgUrl" alt="User Avatar">
                         </div>
                         <div>
-                            <p class="user-name">Ochilov Azimjon</p>
-                            <p class="user-email">ochilovazimjon@gmail.com</p>
+                            <p class="user-name">{{ user.firstName }} {{ user.lastName }}</p>
+                            <p class="user-email">{{ user.email }}</p>
                         </div>
                     </div>
 
@@ -76,9 +76,13 @@
         data(){
             return{
                 isAccountOpen: false,
+                defaultAvatarImgUrl: "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
             }
         },
 
+        props: {
+            user: {}
+        },
         methods:{
             openAccount(){
                 if(this.isAccountOpen){

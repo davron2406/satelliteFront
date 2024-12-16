@@ -23,8 +23,7 @@
                         <td>{{ question.topic.name }}</td>
                         <td>
                             <div class="question-image">
-                               
-                                <img :src="question.questionImage.fileUrl" alt="">
+                                <img :src="question.questionImage?.fileUrl" alt="">
                             </div>
                         </td>
                         <td><button @click="openAnswersModal(question.id)">Answers</button></td>

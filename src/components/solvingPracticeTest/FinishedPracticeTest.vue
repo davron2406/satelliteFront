@@ -6,7 +6,8 @@
 
     <ReviewingPracticeTest 
     :answeredQuestions="finishedPracticeTest.answeredQuestions" 
-    v-if="isReviewingOpen">
+    v-if="isReviewingOpen"
+    :solvedPracticeTestId="this.solvedPracticeTestId">
 
     </ReviewingPracticeTest>
 </template>

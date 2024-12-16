@@ -24,9 +24,13 @@
     <SolvingPracticeTestFooter
       @nextQuestion="nextQuestion()" 
       @finishTest="finishTest()"
-      :isTestFinish="currentQuestionNumber + 1 == practiceTestQuestionIds.length"
+      :currentQuestionNumber="this.currentQuestionNumber"
+      :totalQuestionNumber = "this.totalQuestionNumber"
+      :isTestFinish="currentQuestionNumber  == practiceTestQuestionIds.length"
       >
     </SolvingPracticeTestFooter>
+
+    <LoadPage v-if="isLoadOpen"></LoadPage>
   </div>
 </template>
 
@@ -35,21 +39,18 @@ import Header from './SolvingPracticeTestHeader.vue';
 import QuestionContent from './SolvingPracticeTestQuestion.vue';
 import AnswerOptions from './SolvingPracticeTestAnswerOptions.vue';
 import SolvingPracticeTestFooter from './SolvingPracticeTestFooter.vue';
+import LoadPage from "../utils/LoadPage.vue"
 
   export default{
     data(){
       return{
-        currentQuestionNumber: 0,
+        currentQuestionNumber: 1,
+        totalQuestionNumber: 0,
         currentQuestion:{
         },
         practiceTestQuestionIds: [],
         selectedAnswerId: "",
-        options : [
-          { id: 'A', text: 'reduced' },
-          { id: 'B', text: 'evaluated' },
-          { id: 'C', text: 'determined' },
-          { id: 'D', text: 'acquired' },
-        ],
+        isLoadOpen: false
       }
     },
 
@@ -57,15 +58,18 @@ import SolvingPracticeTestFooter from './SolvingPracticeTestFooter.vue';
       Header,
       QuestionContent,
       AnswerOptions,
-      SolvingPracticeTestFooter
+      SolvingPracticeTestFooter,
+      LoadPage
     },
 
     methods: {
       async getPracticeTestQuestions(){
+        this.isLoadOpen = true;
         const response = await this.$axios.get("/solvedPracticeTest/getQuestionIds/" + this.solvedPracticeTestId, {headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')}})
         this.practiceTestQuestionIds = response.data.data;
+        this.totalQuestionNumber = this.practiceTestQuestionIds.length
         this.getQuestionAndAnswers(this.practiceTestQuestionIds[0])
-        
+        this.isLoadOpen = false
       },
 
       async getQuestionAndAnswers(questionId){
@@ -74,15 +78,16 @@ import SolvingPracticeTestFooter from './SolvingPracticeTestFooter.vue';
       },
 
       nextQuestion(){
-        if(this.currentQuestionNumber < this.practiceTestQuestionIds.length - 1){
-          this.getQuestionAndAnswers(this.practiceTestQuestionIds[this.currentQuestionNumber + 1])
-          this.currentQuestionNumber = this.currentQuestionNumber + 1
+        if(this.currentQuestionNumber < this.practiceTestQuestionIds.length){
           this.saveAnswer()
+          this.selectedAnswerId = ''
+          this.getQuestionAndAnswers(this.practiceTestQuestionIds[this.currentQuestionNumber])
+          this.currentQuestionNumber = this.currentQuestionNumber + 1
+          
         }
       },
 
       selectAnswer(id){
-        console.log(id)
         this.selectedAnswerId=id;
       },
 

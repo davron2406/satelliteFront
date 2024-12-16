@@ -64,11 +64,12 @@
 
         
 
-            async getPracticeTests(pageNumber, pageSize){
-                const response = await this.$axios.get("/practiceTest/getPracticeTests?page=" + pageNumber + "&size=" + pageSize,
+            async getPracticeTests(){
+                const response = await this.$axios.get("/practiceTest/getPracticeTests",
                     {headers: {"Authorization": "Bearer " + localStorage.getItem("token")}}
                 )
-                this.practiceTests = response.data.data.content;              
+
+                this.practiceTests = response.data.data;              
             },
 
             generatePracticeTest(){
@@ -82,7 +83,7 @@
         },
 
         mounted(){
-            this.getPracticeTests(this.defaultPageNumber,this.defaultPageSize);
+            this.getPracticeTests();
         }
     }
 </script>

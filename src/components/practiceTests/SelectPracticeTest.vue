@@ -1,27 +1,35 @@
 <template>
-  <div class="select-field container">
-    <label class="label">
-      Test Type
-      <span class="required">*</span>
-    </label>
-    <select
-      v-model="selectedPracticeTestId"
-      class="select-input"
-      required
-    >
-      <option value="" disabled selected>Select</option>
-      <option
-        v-for="practiceTest in practiceTests"
-        :key="practiceTest.value"
-        :value="practiceTest.id"
+  <div class="select-practice-test">
+    <div class="select-field">
+      <label class="label">
+        Choose Practice Test
+        <span class="required">*</span>
+      </label>
+      <select
+        v-model="selectedPracticeTestId"
+        class="select-input"
+        required
       >
-        {{ practiceTest.name }}
-      </option>
-    </select>
-    <span class="required-text">* = Required</span>
+        <option value="" disabled selected>Select</option>
+        <option
+          v-for="practiceTest in practiceTests"
+          :key="practiceTest.value"
+          :value="practiceTest.id"
+        >
+          {{ practiceTest.name }}
+        </option>
+      </select>
+      <span class="required-text">* = Required</span>
+    </div>
   </div>
 
-  <button @click="solvePracticeTest()">Next</button>
+  <div class="select-practice-test-footer">
+    <div class="btns">
+      <button class="back-btn">Back</button>
+      <button @click="solvePracticeTest()" class="next-btn">Next</button>
+    </div>
+    
+  </div>
 </template>
 
 
@@ -54,8 +62,21 @@
 </script>
 
 <style>
+
+.select-practice-test{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 90vh;
+}
+
 .select-field {
-  margin-bottom: 1.5rem;
+  width: 500px;
+  height: 200px;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
 }
 
 .label {
@@ -97,5 +118,31 @@
   font-size: 0.875rem;
   color: #666;
   margin-top: 0.5rem;
+}
+
+.next-btn, .back-btn{
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: rgb(60, 60, 246);
+  outline: none;
+  border: 1px solid rgb(60, 60, 246);
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.select-practice-test-footer{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 50px;
+  border-top: 2px dashed black;
+  height: 10vh;
+}
+
+.btns{
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 </style>

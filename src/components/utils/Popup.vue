@@ -44,7 +44,6 @@ export default{
 
     mounted(){
         const timeOut = setTimeout(() => {
-
             this.isActive = true;
         },10);
 
@@ -72,6 +71,7 @@ export default{
         background-clip: padding-box;
         padding: 10px;
         transition: all .3s ease-out;
+        z-index: 10000;
     }
 
     .popup-main.active{

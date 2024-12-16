@@ -61,8 +61,6 @@
             async getSidebar(){
                 let response = await this.$axios.get("/sidebar/getSidebars", {headers : { "Authorization": 'Bearer ' + localStorage.getItem('token')}});
                 this.sideBars = response.data.data
-                console.log(this.sideBars)
-                console.log(response)
             },
 
          
@@ -84,7 +82,6 @@
         overflow: hidden;
         min-height: 100vh;
         padding: 1rem;
-
         background-color: #FFFFFF;
         color: #A3AED0;
 
@@ -112,7 +109,6 @@
         display: flex;
         justify-content: flex-end;
         margin-bottom: 1rem;
-
         position: relative;
         top: 0;
         transition: 0.2s ease-out;
@@ -221,11 +217,8 @@
    }
    
  
-    @media only screen and(max-width: 700px){
-        aside{
-            position: fixed;
-            z-index: 99;
-        }
+    @media (max-width: 700px){
+        
     }
 
 </style>
