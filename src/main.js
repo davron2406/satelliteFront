@@ -5,7 +5,7 @@ import App from './App.vue'
 import axios from 'axios'
 import router from './router'
 
-axios.defaults.baseURL = 'http://localhost:8080/api';
+axios.defaults.baseURL = 'https://satelliteback.onrender.com/api';
 
 const app = createApp(App).use(router)
 
