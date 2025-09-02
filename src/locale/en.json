@@ -1,0 +1,45 @@
+{
+    "nav1": "Home",
+    "nav2": "Practise Tests",
+    "nav3": "books",
+    "nav4": "Courses",
+    "nav5": "Contact",
+    
+
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+
+    "MainPageTitle": "Towards high results with us",
+    "MainPageSubTitle": "Prepare for the SAT exam with the most necessary materials, courses, and practice tests",
+
+    "services": "Services",
+    "servicesSubtitle": "Committed to Excellence",
+
+    "courses": "Courses",
+    "coursesSubtitle": "Our Popular Courses",
+
+    "books": "Books",
+    "booksSubtitle": "PDF books & guides",
+
+
+    "benefits": "Benefits",
+    "benefitsSubtitle": "Why choose us",
+
+
+    "testimonials": "Testimonials",
+    "testimonialsSubtitle": "What people are saying",
+
+
+    "faq": "Your questions, Answered",
+    "expand": "Expand All",
+    "collapse": "Collapse All",
+
+
+    "contactSubtitle": "Get in touch",
+    
+    "menu": "Menu",
+    "contact": "Contact",
+    "address": "Address",
+    "socialMedia": "Social Media"
+
+}

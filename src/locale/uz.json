@@ -1,0 +1,45 @@
+{
+    
+    "nav1": "Bosh sahifa",
+    "nav2": "Practise Testlar",
+    "nav3": "Kitoblar",
+    "nav4": "Kurslar",
+    "nav5": "Aloqa",
+    
+
+    "signIn": "Kirish",
+    "signUp": "Ro'yhatdan o'tish",
+
+    "MainPageTitle": "Biz bilan yuqori natijalar sari",
+    "MainPageSubTitle": "SAT imtihoniga eng kerakli materiallar, kurslar, practice testlar bilan tayyorlaning",
+
+    "services": "Xizmatlar",
+    "servicesSubtitle": "Mukammallikka Sodiq" ,
+
+
+    "courses": "Kurslar",
+    "coursesSubtitle": "Eng ommabop kurslar",
+
+    "books": "Kitoblar",
+    "booksSubtitle": "PDF kitoblar va qo'llanmalar",
+
+    "benefits": "Avzalliklar",
+    "benefitsSubtitle": "Nega bizni tanlash kerak",
+
+
+    "testimonials": "Mijozlar",
+    "testimonialsSubtitle": "Mijozlar fikrlari",
+
+
+    "faq": "Siz so'ragan savollar",
+    "expand": "Hammasini ko'rsatish",
+    "collapse": "hammasini yopish",
+
+
+    "contactSubtitle": "Savollarga javob beramiz",
+
+    "menu": "Menu",
+    "contact": "Aloqa",
+    "address": "Manzil",
+    "socialMedia": "Ijtimoiy Tarmoqlar"
+}
