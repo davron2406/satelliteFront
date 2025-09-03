@@ -1,9 +1,9 @@
 <!-- BooksSectionAuto.vue -->
 <template>
-  <section class="books" ref="root" :class="{ in: inView }">
+  <section class="books" id="books" ref="root" :class="{ in: inView }">
     <div class="container">
-      <span class="eyebrow">BOOKS</span>
-      <h2 class="title">PDF books & guides</h2>
+      <span class="eyebrow">{{ $t('books') }}</span>
+      <h2 class="title">{{ $t('booksSubtitle') }}</h2>
 
       <div class="toolbar">
         <div class="search">

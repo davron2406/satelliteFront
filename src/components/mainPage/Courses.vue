@@ -1,10 +1,10 @@
 <!-- CoursesSection.vue -->
 <template>
   <!-- ADDED: ref + class toggle for scroll-in animation -->
-  <section class="courses" ref="root" :class="{ in: inView }">
+  <section class="courses" id="courses" ref="root" :class="{ in: inView }">
     <div class="container">
-      <span class="eyebrow">COURSES</span>
-      <h2 class="title">Our popular courses</h2>
+      <span class="eyebrow">{{ $t('courses') }}</span>
+      <h2 class="title">{{ $t('coursesSubtitle') }}</h2>
 
       <ul class="cards">
         <li v-for="c in courses" :key="c.id" class="card">
@@ -21,9 +21,9 @@
             <p class="desc">{{ c.desc }}</p>
 
             <ul class="meta">
-              <li><strong>Level:</strong> {{ c.level }}</li>
-              <li><strong>Duration:</strong> {{ c.duration }}</li>
-              <li><strong>Lessons:</strong> {{ c.lessons }}</li>
+              <li><strong>{{ $t('courseLevel')}}:</strong> {{ c.level }}</li>
+              <li><strong>{{ $t('courseDuration' )}}:</strong> {{ c.duration }}</li>
+              <li><strong>{{ $t('courseLessons') }}:</strong> {{ c.lessons }}</li>
             </ul>
 
             <div class="actions">

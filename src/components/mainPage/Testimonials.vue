@@ -2,8 +2,8 @@
 <template>
   <section class="testimonials" ref="root" :class="{ in: inView }">
     <div class="container">
-      <span class="eyebrow">MIJOZLAR</span>
-      <h2 class="title">Mijozlar fikrlari</h2>
+      <span class="eyebrow">{{ $t('testimonials') }}</span>
+      <h2 class="title">{{ $t('testimonialsSubtitle') }}</h2>
 
       <ul class="cards">
         <li

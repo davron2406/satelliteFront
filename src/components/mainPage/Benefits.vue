@@ -4,8 +4,8 @@
     <div class="wrap">
       <!-- Header on top, aligned to the right -->
       <div class="head head--right">
-        <div class="eyebrow" :class="{ show: headIn }">BENEFITS</div>
-        <h2 class="title" :class="{ show: headIn }">Why choose us</h2>
+        <div class="eyebrow" :class="{ show: headIn }">{{ $t('benefits') }}</div>
+        <h2 class="title" :class="{ show: headIn }">{{ $t('benefitsSubtitle') }}</h2>
       </div>
 
       <!-- Cards (horizontal row / responsive grid) -->
