@@ -1,73 +1,45 @@
-import {createRouter, createWebHistory} from 'vue-router'
-import Dashboard from "../components/dashboard/Dashboard.vue"
-import Web from "../components/mainPage/Web.vue"
-import Questions from "../components/question/Questions.vue"
-import PracticeTests from "../components/practiceTests/PracticeTests.vue"
-import MyPracticeTests from '../components/practiceTests/MyPracticeTests.vue'
-import PracticeTestsToSolve from "../components/practiceTests/SelectPracticeTest.vue"
-import SolvingPracticeTest from "../components/solvingPracticeTest/SolvingPracticeTest.vue"
-import FinishedPracticeTest from '../components/solvingPracticeTest/FinishedPracticeTest.vue'
-import VerifyEmail from '../components/utils/VerifyEmail.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+
+import Web from '../components/mainPage/Web.vue';
+import DashboardLayout from '../components/views/DashboardLayout.vue';
+
+// dashboard pages
+import Overview from '../components/views/Overview.vue';
+import PracticeTestsBuilder from '../components/views/PracticeTestBuilder.vue'
+import QuestionCreator from '../components/views/QuestionCreator.vue';
+import PracticeTestRunner from '../components/views/PracticeTestRunner.vue'
+import Classess from '../components/views/Classess.vue';
+import TestResults from '../components/views/TestResults.vue';
+import Settings from '../components/views/Settings.vue';
+import Students from '../components/views/Students.vue';
 
 
 
 const routes = [
+  { path: '/', name: 'home', component: Web },
 
-    {
-        path: '/',
-        name: 'Web',
-        component: Web
-    },
-    {
-        path: '/dashboard',
-        name: "Dashboard",
-        component: Dashboard,
-        children: [
-            {
-                path: "/questions",
-                component: Questions
-            },
-
-            {
-                path: "/myPracticeTests",
-                component: MyPracticeTests
-            },
-
-            {
-                path: "/practiceTests",
-                component: PracticeTests
-            }
-        ]
-    },
-
-    {
-        path: "/solvePracticeTest",
-        component: PracticeTestsToSolve
-    },
-
-    {
-        path:"/solvingPracticeTest/:practiceTestId",
-        component: SolvingPracticeTest
-    },
-
-    {
-        path: "/finishedPracticeTest/:solvedPraticeTestId",
-        component: FinishedPracticeTest
-    },
-
-    {
-        path: "/verifyEmail",
-        component: VerifyEmail
-    }
-
-    
-
-]
+  {
+    path: '/dashboard',
+    component: DashboardLayout, // owns Sidebar + DashboardMain
+    children: [
+      { path: '', redirect: '/dashboard/overview' },
+      { path: 'overview', name: 'db-overview', component: Overview, meta: { title: 'Dashboard' } },
+      { path: 'practice', name: 'db-practice', component: PracticeTestsBuilder, meta: { title: 'Practice Tests' } },
+      { path: 'practiceTestRunner',  name: 'db-practiceTestRunner',  component: PracticeTestRunner ,   meta: { title: 'Practice Tests' } },
+      { path: 'question',  name: 'db-question',  component: QuestionCreator,   meta: { title: 'Question Creator' } },
+      { path: 'classes',  name: 'db-classes',  component: Classess,   meta: { title: 'Classes' } },
+      { path: 'testResults',  name: 'db-testResults',  component: TestResults,   meta: { title: 'Test Results' } },
+      { path: 'students',  name: 'db-students',  component: Students,   meta: { title: 'Students' } },
+      { path: 'settings',  name: 'db-settings',  component: Settings,   meta: { title: 'Settings' } },
 
 
-const router = createRouter({
-    history: createWebHistory(),
-    routes
-})
 
-export default router
+    ]
+  }
+];
+
+export default createRouter({
+  history: createWebHistory(),
+  routes,
+  scrollBehavior: () => ({ top: 0 })
+});

@@ -25,7 +25,7 @@
                 formData.append("email", this.email)
                 formData.append("emailCode", this.emailCode)
 
-                const response = await this.$axios.post("/auth/verifyEmail", formData)
+                const response = await this.$axios.post("http://localhost:8080/api/auth/verifyEmail", formData)
                 if(response.data.success){
                     this.message = "Email successfullly verified"
                     this.icon="check"

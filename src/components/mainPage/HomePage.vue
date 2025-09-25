@@ -75,7 +75,8 @@
   body{margin:0;background:var(--bg);color:var(--ink);font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial}
   
   /* Layout */
-  .hero{padding:6vw 2rem}
+  .hero{padding:6vw 2rem; padding-top:120px
+  }
   .wrap{
     max-width:var(--max);
     margin:0 auto;
