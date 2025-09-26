@@ -23,14 +23,14 @@ const routes = [
     component: DashboardLayout, // owns Sidebar + DashboardMain
     children: [
       { path: '', redirect: '/dashboard/overview' },
-      { path: 'overview', name: 'db-overview', component: Overview, meta: { title: 'Dashboard' } },
-      { path: 'practice', name: 'db-practice', component: PracticeTestsBuilder, meta: { title: 'Practice Tests' } },
-      { path: 'practiceTestRunner',  name: 'db-practiceTestRunner',  component: PracticeTestRunner ,   meta: { title: 'Practice Tests' } },
-      { path: 'question',  name: 'db-question',  component: QuestionCreator,   meta: { title: 'Question Creator' } },
-      { path: 'classes',  name: 'db-classes',  component: Classess,   meta: { title: 'Classes' } },
-      { path: 'testResults',  name: 'db-testResults',  component: TestResults,   meta: { title: 'Test Results' } },
-      { path: 'students',  name: 'db-students',  component: Students,   meta: { title: 'Students' } },
-      { path: 'settings',  name: 'db-settings',  component: Settings,   meta: { title: 'Settings' } },
+      { path: '/overview', name: 'db-overview', component: Overview, meta: { title: 'Dashboard' } },
+      { path: '/practice', name: 'db-practice', component: PracticeTestsBuilder, meta: { title: 'Practice Tests' } },
+      { path: '/practiceTestRunner',  name: 'db-practiceTestRunner',  component: PracticeTestRunner ,   meta: { title: 'Practice Tests' } },
+      { path: '/question',  name: 'db-question',  component: QuestionCreator,   meta: { title: 'Question Creator' } },
+      { path: '/classes',  name: 'db-classes',  component: Classess,   meta: { title: 'Classes' } },
+      { path: '/testResults',  name: 'db-testResults',  component: TestResults,   meta: { title: 'Test Results' } },
+      { path: '/students',  name: 'db-students',  component: Students,   meta: { title: 'Students' } },
+      { path: '/settings',  name: 'db-settings',  component: Settings,   meta: { title: 'Settings' } },
 
 
 
