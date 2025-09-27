@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import axios from 'axios'
-import router from './router'
+import router from './router/index.js'
 
 import { createI18n } from 'vue-i18n'
 import EN from './locale/en.json'
