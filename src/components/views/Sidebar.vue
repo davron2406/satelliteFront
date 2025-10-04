@@ -39,6 +39,7 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
+const API = import.meta.env.VITE_API;
 
 const user1 = ref(null); // Holds the user data
 const collapsed = ref(false);
@@ -64,16 +65,11 @@ async function getHeaders() {
 // Fetch the current user data from the API
 async function fetchCurrentUser() {
   try {
-    const headers = await getHeaders();
-    const resp = await fetch('https://satelliteback.onrender.com/api/auth/me', {
-      method: 'GET',
-      headers,
-      credentials: 'include',
-    });
+   const saved = sessionStorage.getItem('user')
 
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
 
-    user1.value = await resp.json(); // Populate user data
+
+    user1.value = await JSON.parse(saved); // Populate user data
     role.value = user1.value.role;   // Set role from user data
   } catch (e) {
     user1.value = null;
@@ -86,9 +82,9 @@ const items = [
   { to: '/dashboard/overview', label: 'Overview', icon: home() },
   { to: '/dashboard/practice', label: 'Practice Tests', icon: list() },
   { to: '/dashboard/question', label: 'Ask a Question', icon: user() },
-  { to: '/dashboard/practiceTestRunner', label: 'Solve Practice Test', icon: doc() },
+  { to: '/dashboard/practice-test-runner', label: 'Solve Practice Test', icon: doc() },
   { to: '/dashboard/classes', label: 'Classes', icon: doc() },
-  { to: '/dashboard/testResults', label: 'Test Results', icon: doc() },
+  { to: '/dashboard/test-results', label: 'Test Results', icon: doc() },
   { to: '/dashboard/students', label: 'Students', icon: doc() },
   { to: '/dashboard/settings', label: 'Settings', icon: gear() },
 ];
@@ -100,11 +96,11 @@ const filteredItems = computed(() => {
   }
   if (role.value.name === 'TEACHER') {
     // Teachers see specific menu items
-    return items.filter(item => item.to !== '/dashboard/practiceTestRunner' && item.to !== '/dashboard/settings');
+    return items.filter(item => item.to !== '/dashboard/practice-test-runner' && item.to !== '/dashboard/settings');
   }
   if (role.value.name === 'STUDENT') {
     // Students only see Solve Practice Test
-    return items.filter(item => item.to === '/dashboard/practiceTestRunner');
+    return items.filter(item => item.to === '/dashboard/practice-test-runner');
   }
   return []; // Default fallback if the role is unknown
 });

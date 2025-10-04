@@ -181,7 +181,7 @@
 import { reactive, ref, computed, onMounted, watch } from 'vue';
 import axios from 'axios';
 
-const API = 'https://satelliteback.onrender.com';
+const API = import.meta.env.VITE_API;
 const difficulties = ['EASY', 'MEDIUM', 'HARD'];
 
 // pageable state

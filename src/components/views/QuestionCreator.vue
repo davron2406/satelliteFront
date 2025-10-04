@@ -155,6 +155,7 @@
 
 <script setup>
 import { computed, nextTick, onMounted, reactive, ref } from 'vue';
+const API = import.meta.env.VITE_API;
 
 const difficulties = ['EASY', 'MEDIUM', 'HARD'];
 
@@ -280,7 +281,7 @@ async function submit(){
     };
 
     const token = sessionStorage.getItem('token');
-    const res = await fetch('https://satelliteback.onrender.com/api/questions', {
+    const res = await fetch(`${API}/qustions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

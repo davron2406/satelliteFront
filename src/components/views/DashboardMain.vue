@@ -22,6 +22,7 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+const API = import.meta.env.VITE_API;
 
 const user = ref(null); // Holds the user data
 const error = ref(null); // Holds any error message
@@ -41,7 +42,7 @@ async function getHeaders() {
 async function fetchCurrentUser() {
   try {
     const headers = await getHeaders();
-    const resp = await fetch('https://satelliteback.onrender.com/api/auth/me', {
+    const resp = await fetch(`${API}/auth/me`, {
       method: 'GET',
       headers,
       credentials: 'include',

@@ -158,12 +158,11 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 
-// API (name-only)
-const API_BASE = 'https://satelliteback.onrender.com/api'
+const API = import.meta.env.VITE_API;
 const ENDPOINTS = {
-  classes: (name) => `${API_BASE}/classes/my${name ? `?name=${encodeURIComponent(name)}` : ''}`,
-  templates: (name) => `${API_BASE}/templates/search?name=${encodeURIComponent(name)}`,
-  results: (classId, templateId) => `${API_BASE}/classes/templates/results/${classId}/${templateId}`
+  classes: (name) => `${API}/classes/my${name ? `?name=${encodeURIComponent(name)}` : ''}`,
+  templates: (name) => `${API}/templates/search?name=${encodeURIComponent(name)}`,
+  results: (classId, templateId) => `${API}/classes/templates/results/${classId}/${templateId}`
 }
 
 // State

@@ -190,7 +190,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted, onUnmounted, watch } from 'vue';
 
-const API = 'https://satelliteback.onrender.com';
+const API = import.meta.env.VITE_API;
 const tokenHeader = () => {
   const t = sessionStorage.getItem('token');
   return t ? { Authorization: `Bearer ${t}` } : {};

@@ -272,10 +272,9 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue';
-import axios from 'axios'
+import axios from 'axios';
+const API = import.meta.env.VITE_API;
 
-const BASE = 'https://satelliteback.onrender.com';
-const API  = `${BASE}/api`;
 
 const tokenHeader = () => {
   const t = sessionStorage.getItem('token');

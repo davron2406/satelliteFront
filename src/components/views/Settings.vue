@@ -113,7 +113,7 @@
   import { reactive, ref, computed, onMounted } from 'vue';
   import axios from 'axios';
   
-  const API = 'https://satelliteback.onrender.com';
+  const API = import.meta.env.VITE_API;
   
   const busy = ref(false);
   

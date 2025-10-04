@@ -2,7 +2,6 @@
   <div class="layout">
     <!-- Sidebar -->
     <Sidebar
-      :user="user"
       :loading="loading"
       :collapsed="collapsed"
       @toggle="collapsed = !collapsed"
@@ -18,6 +17,7 @@
 import { onMounted, ref,watch } from 'vue';
 import Sidebar from './Sidebar.vue';
 import DashboardMain from './DashboardMain.vue';
+const API = import.meta.env.VITE_API;
 // import DashboardHeader from './DashboardHeader.vue' // if you render it here
 
 // If you already have a tokenHeader() util, import it; else use the inline getHeaders below.
@@ -54,7 +54,7 @@ function signOut() {
 
 
 onMounted(() => {
-  console.log("it is working parent")
+ 
 });
 
 // persist sidebar collapsed state

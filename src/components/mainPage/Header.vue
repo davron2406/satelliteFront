@@ -1,188 +1,190 @@
 <!-- SiteHeader.vue -->
 <template>
-  <header class="site-header" role="banner">
-    <div class="bar">
-      <!-- Brand -->
-      <a class="logo" href="/">
-        <img src="../../assets/logo.svg" alt="">
-      </a>
+  <div class="site-header-wrap">
+    <header class="site-header" role="banner">
+      <div class="bar">
+        <!-- Brand -->
+        <a class="logo" href="/">
+          <img src="../../assets/logo.svg" alt="">
+        </a>
 
-      <!-- Mobile burger -->
-      <button
-        class="burger"
-        :aria-expanded="isOpen ? 'true' : 'false'"
-        aria-label="Toggle navigation"
-        @click="isOpen = !isOpen"
-      >
-        <span :class="{ open: isOpen }"></span>
-        <span :class="{ open: isOpen }"></span>
-        <span :class="{ open: isOpen }"></span>
-      </button>
-
-      <!-- Nav -->
-      <nav class="nav" :class="{ open: isOpen }" role="navigation">
-        <a class="link" href="#" :class="{ active: active === 'home' }" @click="go('home')">{{ $t('nav1') }}</a>
-        <a class="link" href="#" :class="{ active: active === 'practice' }" @click="go('practice')">{{ $t('nav2') }}</a>
-        <a class="link" href="#books" :class="{ active: active === 'books' }" @click="go('books')">{{ $t('nav3') }}</a>
-        <a class="link" href="#courses" :class="{ active: active === 'courses' }" @click="go('courses')">{{ $t('nav4') }}</a>
-        <a class="link" href="#contact" :class="{ active: active === 'contact' }" @click="go('contact')">{{ $t('nav5') }}</a>
-
-        <div class="sep" aria-hidden="true"></div>
-
-        <!-- Language chooser -->
-        <label class="lang" title="Choose language">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-            <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2Zm0 2c1.6 0 3.07.6 4.2 1.6H7.8A6.97 6.97 0 0 1 12 4Zm-7 8c0-.7.1-1.37.3-2h13.4c.2.63.3 1.3.3 2s-.1 1.37-.3 2H5.3c-.2-.63-.3-1.3-.3-2Zm1.8 5.4h10.4A6.97 6.97 0 0 1 12 20c-1.6 0-3.07-.6-4.2-1.6ZM7 7.6h10A8 8 0 0 1 19.4 10H4.6A8 8 0 0 1 7 7.6Z"/>
-          </svg>
-          <select v-model="$i18n.locale">
-            <option v-for="l in langs" :key="l.value" :value="l.value">{{ l.label }}</option>
-          </select>
-        </label>
-
-        <!-- Auth buttons -->
-        <button class="btn" @click="openAuth('signup')">{{ $t('signUp') }}</button>
-        <button class="btn" @click="openAuth('signin')">{{ $t('signIn') }}</button>
-      </nav>
-    </div>
-  </header>
-
-  <!-- ===== Auth Modal (two modes; design unchanged) ===== -->
-  <div
-    v-if="auth.open"
-    class="overlay"
-    @click.self="closeAuth"
-    :aria-hidden="auth.open ? 'false' : 'true'"
-  >
-    <div class="dialog" role="dialog" aria-modal="true" :aria-labelledby="auth.mode + '-title'">
-      <div class="dialog-head">
-        <h3 class="dialog-title" :id="auth.mode + '-title'">
-          {{ auth.mode === 'signin' ? 'Sign in' : 'Create your account' }}
-        </h3>
-        <button class="x" aria-label="Close" @click="closeAuth">×</button>
-      </div>
-
-      <form class="form" @submit.prevent="submitAuth">
-        <!-- Sign-up extra fields -->
-        <template v-if="auth.mode === 'signup'">
-          <label class="field">
-            <span>First name</span>
-            <input ref="firstField" v-model.trim="form.firstName" type="text" required autocomplete="given-name" />
-          </label>
-
-          <label class="field">
-            <span>Last name</span>
-            <input v-model.trim="form.lastName" type="text" required autocomplete="family-name" />
-          </label>
-
-          <label class="field">
-            <span>Phone</span>
-            <div class="phone">
-              <span class="cc">+998</span>
-              <input
-                v-model="phoneView"
-                inputmode="numeric"
-                maxlength="12"
-                placeholder="90 123 45 67"
-                @input="onPhone"
-                autocomplete="tel-national"
-                required
-              />
-            </div>
-          </label>
-          <small class="hint">Codes: 33, 90, 91, 93, 94, 95, 97, 98, 99, 71</small>
-        </template>
-
-        <!-- Shared fields -->
-        <label class="field" :class="{ full: auth.mode === 'signin' }">
-          <span>Email</span>
-          <input :ref="auth.mode === 'signin' ? 'firstField' : null" v-model.trim="form.email" type="email" required autocomplete="email" />
-        </label>
-
-        <label class="field">
-          <span>Password</span>
-          <input v-model="form.password" :type="showPw ? 'text' : 'password'" required autocomplete="current-password" />
-          <button class="ghost tiny" type="button" @click="showPw = !showPw">{{ showPw ? 'Hide' : 'Show' }}</button>
-        </label>
-
-        <!-- Password checker (signup only) -->
-        <div v-if="auth.mode==='signup'" class="pcheck">
-          <div class="pbar" :data-strength="strengthLabel">
-            <div class="pbar-fill" :style="{ width: strengthPct + '%' }"></div>
-          </div>
-          <div class="prow">
-            <span class="pbadge" :class="{ok: passLen}">8+ chars</span>
-            <span class="pbadge" :class="{ok: passLetter}">letter</span>
-            <span class="pbadge" :class="{ok: passDigit}">number</span>
-            <span class="pbadge" :class="{ok: passSpecial}">special</span>
-          </div>
-          <small class="pnote">Strength: {{ strengthLabel }}</small>
-        </div>
-
-        <div class="row-between">
-          <label class="check" v-if="auth.mode === 'signin'">
-            <input type="checkbox" v-model="form.remember" />
-            <span>Remember me</span>
-          </label>
-          <a class="ghost" href="#" v-if="auth.mode === 'signin'">Forgot password?</a>
-        </div>
-
-        <button class="cta" type="submit" :disabled="busy">
-          {{ auth.mode === 'signin' ? 'Sign in' : 'Create account' }}
+        <!-- Mobile burger -->
+        <button
+          class="burger"
+          :aria-expanded="isOpen ? 'true' : 'false'"
+          aria-label="Toggle navigation"
+          @click="isOpen = !isOpen"
+        >
+          <span :class="{ open: isOpen }"></span>
+          <span :class="{ open: isOpen }"></span>
+          <span :class="{ open: isOpen }"></span>
         </button>
 
-        <div class="or">
-          <span>or continue with</span>
-        </div>
+        <!-- Nav -->
+        <nav class="nav" :class="{ open: isOpen }" role="navigation">
+          <a class="link" href="#" :class="{ active: active === 'home' }" @click="go('home')">{{ $t('nav1') }}</a>
+          <a class="link" href="#" :class="{ active: active === 'practice' }" @click="go('practice')">{{ $t('nav2') }}</a>
+          <a class="link" href="#books" :class="{ active: active === 'books' }" @click="go('books')">{{ $t('nav3') }}</a>
+          <a class="link" href="#courses" :class="{ active: active === 'courses' }" @click="go('courses')">{{ $t('nav4') }}</a>
+          <a class="link" href="#contact" :class="{ active: active === 'contact' }" @click="go('contact')">{{ $t('nav5') }}</a>
 
-        <div class="socials">
-          <button type="button" class="sbtn" :disabled="busy">Google</button>
-          <button type="button" class="sbtn" :disabled="busy">GitHub</button>
-        </div>
+          <div class="sep" aria-hidden="true"></div>
 
-        <p class="switch">
-          <template v-if="auth.mode === 'signin'">
-            Don’t have an account?
-            <button class="ghost" type="button" @click="switchMode('signup')">Sign up</button>
-          </template>
-          <template v-else>
-            Already have an account?
-            <button class="ghost" type="button" @click="switchMode('signin')">Sign in</button>
-          </template>
-        </p>
-      </form>
-    </div>
-  </div>
+          <!-- Language chooser -->
+          <label class="lang" title="Choose language">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2Zm0 2c1.6 0 3.07.6 4.2 1.6H7.8A6.97 6.97 0 0 1 12 4Zm-7 8c0-.7.1-1.37.3-2h13.4c.2.63.3 1.3.3 2s-.1 1.37-.3 2H5.3c-.2-.63-.3-1.3-.3-2Zm1.8 5.4h10.4A6.97 6.97 0 0 1 12 20c-1.6 0-3.07-.6-4.2-1.6ZM7 7.6h10A8 8 0 0 1 19.4 10H4.6A8 8 0 0 1 7 7.6Z"/>
+            </svg>
+            <select v-model="$i18n.locale">
+              <option v-for="l in langs" :key="l.value" :value="l.value">{{ l.label }}</option>
+            </select>
+          </label>
 
-  <!-- ===== Toast (top-right popup) ===== -->
-  <transition name="toast">
+          <!-- Auth buttons -->
+          <button class="btn" @click="onOpenSignUp">{{ $t('signUp') }}</button>
+          <button class="btn" @click="onOpenSignIn">{{ $t('signIn') }}</button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ===== Auth Modal (two modes) ===== -->
     <div
-      v-if="toast.show"
-      class="toast"
-      :class="toast.type"
-      role="status"
-      aria-live="polite"
-      @mouseenter="pauseToast"
-      @mouseleave="resumeToast"
+      v-if="auth.open"
+      class="overlay"
+      @click.self="onCloseAuth"
+      :aria-hidden="auth.open ? 'false' : 'true'"
     >
-      <div class="ticon" v-if="toast.type==='error'">!</div>
-      <div class="ticon ok" v-else>✓</div>
-      <div class="tmsg">{{ toast.message }}</div>
-      <button class="tclose" @click="hideToast" aria-label="Close">×</button>
+      <div class="dialog" role="dialog" aria-modal="true" :aria-labelledby="auth.mode + '-title'">
+        <div class="dialog-head">
+          <h3 class="dialog-title" :id="auth.mode + '-title'">
+            {{ auth.mode === 'signin' ? 'Sign in' : 'Create your account' }}
+          </h3>
+          <button class="x" aria-label="Close" @click="onCloseAuth">×</button>
+        </div>
+
+        <form class="form" @submit.prevent="submitAuth">
+          <!-- Sign-up extra fields -->
+          <template v-if="auth.mode === 'signup'">
+            <label class="field">
+              <span>First name</span>
+              <input ref="firstField" v-model.trim="form.firstName" type="text" required autocomplete="given-name" />
+            </label>
+
+            <label class="field">
+              <span>Last name</span>
+              <input v-model.trim="form.lastName" type="text" required autocomplete="family-name" />
+            </label>
+
+            <label class="field">
+              <span>Phone</span>
+              <div class="phone">
+                <span class="cc">+998</span>
+                <input
+                  v-model="phoneView"
+                  inputmode="numeric"
+                  maxlength="12"
+                  placeholder="90 123 45 67"
+                  @input="onPhone"
+                  autocomplete="tel-national"
+                  required
+                />
+              </div>
+            </label>
+            <small class="hint">Codes: 33, 90, 91, 93, 94, 95, 97, 98, 99, 71</small>
+          </template>
+
+          <!-- Shared fields -->
+          <label class="field" :class="{ full: auth.mode === 'signin' }">
+            <span>Email</span>
+            <input :ref="auth.mode === 'signin' ? 'firstField' : null" v-model.trim="form.email" type="email" required autocomplete="email" />
+          </label>
+
+          <label class="field">
+            <span>Password</span>
+            <input v-model="form.password" :type="showPw ? 'text' : 'password'" required autocomplete="current-password" />
+            <button class="ghost tiny" type="button" @click="showPw = !showPw">{{ showPw ? 'Hide' : 'Show' }}</button>
+          </label>
+
+          <!-- Password checker (signup only) -->
+          <div v-if="auth.mode==='signup'" class="pcheck">
+            <div class="pbar" :data-strength="strengthLabel">
+              <div class="pbar-fill" :style="{ width: strengthPct + '%' }"></div>
+            </div>
+            <div class="prow">
+              <span class="pbadge" :class="{ok: passLen}">8+ chars</span>
+              <span class="pbadge" :class="{ok: passLetter}">letter</span>
+              <span class="pbadge" :class="{ok: passDigit}">number</span>
+              <span class="pbadge" :class="{ok: passSpecial}">special</span>
+            </div>
+            <small class="pnote">Strength: {{ strengthLabel }}</small>
+          </div>
+
+          <div class="row-between">
+            <label class="check" v-if="auth.mode === 'signin'">
+              <input type="checkbox" v-model="form.remember" />
+              <span>Remember me</span>
+            </label>
+            <a class="ghost" href="#" v-if="auth.mode === 'signin'">Forgot password?</a>
+          </div>
+
+          <button class="cta" type="submit" :disabled="busy">
+            {{ auth.mode === 'signin' ? 'Sign in' : 'Create account' }}
+          </button>
+
+          <div class="or">
+            <span>or continue with</span>
+          </div>
+
+          <div class="socials">
+            <button type="button" class="sbtn" :disabled="busy">Google</button>
+            <button type="button" class="sbtn" :disabled="busy">GitHub</button>
+          </div>
+
+          <p class="switch">
+            <template v-if="auth.mode === 'signin'">
+              Don’t have an account?
+              <button class="ghost" type="button" @click="switchMode('signup')">Sign up</button>
+            </template>
+            <template v-else>
+              Already have an account?
+              <button class="ghost" type="button" @click="switchMode('signin')">Sign in</button>
+            </template>
+          </p>
+        </form>
+      </div>
     </div>
-  </transition>
+
+    <!-- ===== Toast (top-right popup) ===== -->
+    <transition name="toast">
+      <div
+        v-if="toast.show"
+        class="toast"
+        :class="toast.type"
+        role="status"
+        aria-live="polite"
+        @mouseenter="pauseToast"
+        @mouseleave="resumeToast"
+      >
+        <div class="ticon" v-if="toast.type==='error'">!</div>
+        <div class="ticon ok" v-else>✓</div>
+        <div class="tmsg">{{ toast.message }}</div>
+        <button class="tclose" @click="hideToast" aria-label="Close">×</button>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, nextTick } from "vue";
 import axios from "axios";
 
-/* ---------- Axios (no interceptor; we decide success by payload) ---------- */
-const api = axios.create({
-  baseURL: "https://satelliteback.onrender.com/api",
-  withCredentials: true,
-});
+// ----- Accept/emit events from parent to avoid "extraneous non-emits" warning
+const emit = defineEmits(["openSignUp", "openSignIn", "closeAuth"]);
 
-/* ---------- Helpers to interpret backend responses ---------- */
+// API
+const API = import.meta.env.VITE_API;
+
+// ===== Helpers to interpret backend responses =====
 function looksLikeSuccess(d) {
   if (!d || typeof d !== 'object') return false;
   if (typeof d.token === 'string' && d.token.length > 12) return true;
@@ -205,7 +207,7 @@ function extractToken(d) { return d?.token?.accessToken || d?.token || d?.jwt ||
 function extractUser(d)  { return d?.user || d?.data?.user || null; }
 function extractMessage(d, fallback) { return d?.message || d?.error || fallback; }
 
-/* ---------- Header state ---------- */
+// ===== Header state =====
 const isOpen = ref(false);
 const active = ref("home");
 const langs = [
@@ -215,12 +217,12 @@ const langs = [
 ];
 function go(key) { active.value = key; isOpen.value = false; }
 
-/* ===== Auth state ===== */
+// ===== Auth state =====
 const auth = ref({ open: false, mode: "signin" }); // 'signin' | 'signup'
 const form = ref({
   firstName: "",
   lastName: "",
-  phoneNumber: "",     // 9 digits (no +998)
+  phoneNumber: "", // 9 digits (no +998)
   email: "",
   password: "",
   remember: true
@@ -228,6 +230,7 @@ const form = ref({
 const showPw = ref(false);
 const firstField = ref(null);
 const busy = ref(false);
+const user = ref()
 
 function lockScroll(lock) { document.body.style.overflow = lock ? "hidden" : ""; }
 function openAuth(mode) {
@@ -239,7 +242,21 @@ function openAuth(mode) {
 function closeAuth() { auth.value.open = false; lockScroll(false); }
 function switchMode(mode) { auth.value.mode = mode; nextTick(() => firstField.value?.focus()); }
 
-/* ===== Phone (UZ) ===== */
+// Handlers that both open local modal and emit upward (for parent listeners)
+function onOpenSignUp() {
+  openAuth('signup');
+  emit('openSignUp');
+}
+function onOpenSignIn() {
+  openAuth('signin');
+  emit('openSignIn');
+}
+function onCloseAuth() {
+  closeAuth();
+  emit('closeAuth');
+}
+
+// ===== Phone (UZ) =====
 const phoneView = ref("");
 const uzCodes = new Set(["33","90","91","93","94","95","97","98","99","71"]);
 const phoneDigits = computed(() => phoneView.value.replace(/\D/g, "").slice(0, 9));
@@ -254,15 +271,15 @@ function onPhone(e){
   const d = e.target.value.replace(/\D/g,'').slice(0,9);
   phoneView.value = [d.slice(0,2), d.slice(2,5), d.slice(5,7), d.slice(7,9)]
     .filter(Boolean).join(' ');
-  form.value.phone = phoneDigits.value;
+  form.value.phoneNumber = phoneDigits.value; // keep in form
 }
 
-/* Email validity */
+// Email validity
 const validEmail = computed(() =>
   /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(form.value.email.trim())
 );
 
-/* ===== Password checker (signup only) ===== */
+// Password checker (signup)
 const passLen     = computed(() => form.value.password.length >= 8);
 const passLetter  = computed(() => /[A-Za-z]/.test(form.value.password));
 const passDigit   = computed(() => /\d/.test(form.value.password));
@@ -273,7 +290,7 @@ const strengthScore = computed(() =>
 const strengthPct = computed(() => [0, 30, 60, 85, 100][strengthScore.value]);
 const strengthLabel = computed(() => ['Weak','Weak','Fair','Strong','Very strong'][strengthScore.value]);
 
-/* ===== Toast ===== */
+// ===== Toast =====
 const toast = ref({ show: false, message: '', type: 'error' });
 let toastTimer = null;
 function showToast(message, type = 'error', duration = 3000) {
@@ -285,16 +302,18 @@ function hideToast(){ toast.value.show = false; clearTimeout(toastTimer); }
 function pauseToast(){ clearTimeout(toastTimer); }
 function resumeToast(){ if (toast.value.show) toastTimer = setTimeout(() => toast.value.show = false, 1600); }
 
-/* ===== Submit (robust & permissive for 200s) ===== */
+// ===== Submit =====
 async function submitAuth() {
   if (busy.value) return;
+  busy.value = true;
 
   // Client checks before API
   if (auth.value.mode === 'signin') {
+    console.log(API)
     const errs = [];
     if (!validEmail.value) errs.push('Email');
     if (!form.value.password.trim()) errs.push('Password');
-    if (errs.length) { showToast(`Please fill: ${errs.join(', ')}`, 'error'); return; }
+    if (errs.length) { showToast(`Please fill: ${errs.join(', ')}`, 'error'); busy.value = false; return; }
   } else {
     const errs = [];
     if (form.value.firstName.trim().length < 2) errs.push('First name');
@@ -303,43 +322,64 @@ async function submitAuth() {
     const digits = phoneDigits.value, code = digits.slice(0,2);
     if (digits.length !== 9 || !uzCodes.has(code)) errs.push('Phone');
     if (!passLen.value || !passLetter.value || !passDigit.value) errs.push('Password (8+, letter & number)');
-    if (errs.length) { showToast(`Please fix: ${errs.join(', ')}`, 'error'); return; }
+    if (errs.length) { showToast(`Please fix: ${errs.join(', ')}`, 'error'); busy.value = false; return; }
   }
 
-  busy.value = true;
   try {
     if (auth.value.mode === 'signin') {
-      const res = await api.post('/auth/login', {
+      const res = await axios.post(`${API}/auth/login`, {
         email: form.value.email.trim(),
         password: form.value.password,
         remember: !!form.value.remember,
       });
       const data = res.data || {};
-      sessionStorage.setItem('token', data)
-    
+      console.log(res.data)
+
       if (looksLikeFailure(data)) {
         showToast(extractMessage(data, 'Email or password is incorrect.'), 'error');
         return;
       }
 
-      const token = extractToken(data);
+      const token = data;
+      console.log(token)
       if (token) {
         localStorage.setItem('token', token);
-        api.defaults.headers.common.Authorization = `Bearer ${token}`;
+        sessionStorage.setItem('token', token);
       }
-      const user = extractUser(data);
-      if (user) localStorage.setItem('user', JSON.stringify(user));
 
-      closeAuth();
+      
+
+// Fetch the current user data from the API
+
+  try {
+    
+    const resp = await fetch(`${API}/auth/me`, {
+      method: 'GET',
+      headers: {"Authorization": "Bearer " + token},
+      credentials: 'include',
+    });
+    
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    
+    user.value = await resp.json();
+    console.log(user)
+    sessionStorage.setItem('user', JSON.stringify(user.value));
+                 
+  } catch (e) {
+    error.value = e?.message || 'Unknown error';
+    user.value = null; // Reset user if there's an error
+  }
+
+      onCloseAuth();
       window.location.assign('/dashboard');
     } else {
       const digits = phoneDigits.value;
-      const res = await api.post('/auth/register', {
-        firstName: form.value.firstName.trim(),
-        lastName:  form.value.lastName.trim(),
-        phoneNumber:     `+998${digits}`,
-        email:     form.value.email.trim(),
-        password:  form.value.password,
+      const res = await axios.post(`${API}/auth/register`, {
+        firstName:  form.value.firstName.trim(),
+        lastName:   form.value.lastName.trim(),
+        phoneNumber:`+998${digits}`,
+        email:      form.value.email.trim(),
+        password:   form.value.password,
       });
       const data = res.data || {};
 
@@ -352,11 +392,12 @@ async function submitAuth() {
       if (token) {
         localStorage.setItem('token', token);
         api.defaults.headers.common.Authorization = `Bearer ${token}`;
+        sessionStorage.setItem('token', token);
       }
       const user = extractUser(data);
       if (user) localStorage.setItem('user', JSON.stringify(user));
 
-      closeAuth();
+      onCloseAuth();
       window.location.assign('/dashboard');
     }
   } catch (e) {
@@ -369,8 +410,8 @@ async function submitAuth() {
   }
 }
 
-/* Close with ESC */
-function onKey(e) { if (e.key === "Escape" && auth.value.open) closeAuth(); }
+// Close with ESC
+function onKey(e) { if (e.key === "Escape" && auth.value.open) onCloseAuth(); }
 onMounted(() => window.addEventListener("keydown", onKey));
 onBeforeUnmount(() => window.removeEventListener("keydown", onKey));
 </script>

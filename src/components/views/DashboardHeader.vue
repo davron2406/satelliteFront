@@ -12,6 +12,8 @@
   </template>
   
   <script setup>
+const API = import.meta.env.VITE_API;
+
   const props = defineProps({
     user: { type: Object, default: () => ({ name: 'Davron', role: 'Student', color: '#2f6fed' }) }
   });
