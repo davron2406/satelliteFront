@@ -281,7 +281,7 @@ async function submit(){
     };
 
     const token = sessionStorage.getItem('token');
-    const res = await fetch(`${API}/qustions`, {
+    const res = await fetch(`${API}/questions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
